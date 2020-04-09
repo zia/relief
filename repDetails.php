@@ -22,8 +22,8 @@
     // Connection with Mysql
     try {
         $results = $pdo->prepare("SELECT * FROM records WHERE nid = ? or mobile=?");
-        $results->bindParam(1, $id, PDO::PARAM_INT);
-        $results->bindParam(2, $id, PDO::PARAM_INT);
+        $results->bindParam(1, $id, PDO::PARAM_STR);
+        $results->bindParam(2, $id, PDO::PARAM_STR);
         $results->execute();
         $repDetails = $results->fetchAll(PDO::FETCH_ASSOC);
         $rows = $results->rowCount();

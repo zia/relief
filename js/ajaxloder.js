@@ -7,19 +7,41 @@ function myFunction() {
 function saveValue(e) {
   var id = e.id;  // get the sender's id to save it .
   var val = e.value; // get the value.
-  localStorage.setItem(id, val);// Every time user writing something, the localStorage's value will override . 
+  if (typeof(Storage) !== "undefined") {
+    localStorage.setItem(id, val);// Every time user writing something, the localStorage's value will override . 
+  }
+  else {
+    console.log("Sorry, your browser does not support web storage...");
+  }
 }
 
 //get the saved value function - return the value of "v" from localStorage.
 function getSavedValue(v) {
-  if (!localStorage.getItem(v)) {
-      return "";// You can change this to your defualt value.
+  if (typeof(Storage) !== "undefined") {
+    if (!localStorage.getItem(v)) {
+        return "";// You can change this to your defualt value.
+    }
+    return localStorage.getItem(v);
   }
-  return localStorage.getItem(v);
+  else {
+    console.log("Sorry, your browser does not support web storage...");
+  }
 }
 
 $(document).ready(function() {
-  $('#showtable').DataTable();
+  $('#showtable').DataTable({
+    dom: 'Bfrtip',
+    buttons: [
+      {
+        extend: 'copy',
+        title: $('#union_heading').text()
+      },
+      {
+        extend: 'print',
+        title: $('#union_heading').text()
+      },
+    ]
+  });
 
   function myFunction() {
     window.print();
@@ -55,13 +77,13 @@ $("form.serviceEntry").submit(function(evt) {
     dataType: 'html'
   })
   .done(function(data) {
-    document.getElementById("nid").value        = getSavedValue("nid"); // set the value to this input
-    document.getElementById("mobile").value     = getSavedValue("mobile"); // set the value to this input
-    document.getElementById("fullName").value   = getSavedValue("fullName"); // set the value to this input
-    document.getElementById("sel_ward").value   = getSavedValue("sel_ward"); // set the value to this input
-    document.getElementById("sel_depart").value = getSavedValue("sel_depart"); // set the value to this input
-    document.getElementById("sel_relief").value = getSavedValue("sel_relief"); // set the value to this input
-    document.getElementById("sel_fiscal").value = getSavedValue("sel_fiscal"); // set the value to this input
+    $('#nid').val(getSavedValue("nid"));
+    $('#mobile').val(getSavedValue("mobile"));
+    $('#fullName').val(getSavedValue("fullName"));
+    $('#sel_ward').val(getSavedValue("sel_ward"));
+    $('#sel_depart').val(getSavedValue("sel_depart"));
+    $('#sel_relief').val(getSavedValue("sel_relief"));
+    $('#sel_fiscal').val(getSavedValue("sel_fiscal"));
     /* Here you can add more inputs to set value. if it's saved */
     document.getElementById("nid").focus();
     $('.serviceDetails').html(data).fadeTo('slow', 1);

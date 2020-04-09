@@ -30,7 +30,7 @@
             die("Could not connect to the database:" . $e->getMessage());
           }
         ?>
-        <h4>
+        <h4 id="union_heading">
           <?php
             $row = $q1->fetchAll();
             if($row)
