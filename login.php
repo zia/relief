@@ -91,14 +91,14 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">ইউজারনেম অথবা ইমেইল</label>
 							<div class="col-sm-6">
-								<input type="text" name="txt_username_email" class="form-control" placeholder="enter username or email" />
+								<input type="text" name="txt_username_email" class="form-control" placeholder="ইউজারনেম অথবা ইমেইল প্রদান করুন" />
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-sm-3 control-label">পাসওয়ার্ড</label>
 							<div class="col-sm-6">
-								<input type="password" name="txt_password" class="form-control" placeholder="enter passowrd" />
+								<input type="password" name="txt_password" class="form-control" placeholder="পাসওয়ার্ড প্রদান করুন" />
 							</div>
 						</div>
 
