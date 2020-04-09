@@ -7,24 +7,23 @@
         <form class="serviceEntry inputForm">
           <div class="form-group">
             <label for="NID">এনআইডি* (১০ অথবা ১৭ সংখ্যার এনাইডি লিখুন)</label>
-            <input type="text" name="nid" class="form-control" id="nid" aria-describedby="emailHelp" placeholder="ন্যাশনাল আইডি নং দিন।" required>
-            <!-- <small id="emailHelp" class="form-text text-muted">১০ অথবা ১৭ সংখ্যার এনাইডি লিখুন</small> -->
+            <input type="text" name="nid" class="form-control" id="nid" placeholder="ন্যাশনাল আইডি নং দিন।" onkeyup="saveValue(this);" onClick="this.select();" required>
           </div>
 
           <div class="form-group">
             <label for="mobile">মোবাইল</label>
-            <input type="text" name="mobile" class="form-control" id="mobile" aria-describedby="emailHelp" placeholder="মোবাইল নম্বর লিখুন।" required>
-            <small id="emailHelp" class="form-text text-muted">১১ ডিজিটের মোবাইল নং লিখুন। (ত্রাণ গ্রহীতার মোবাইল না থাকলে; পরিচিত কারও মোবাইল নং দিন)</small>
+            <input type="text" name="mobile" class="form-control" id="mobile" aria-describedby="mobileHelp" placeholder="মোবাইল নম্বর লিখুন।" onkeyup="saveValue(this);" onClick="this.select();" required>
+            <small id="mobileHelp" class="form-text text-muted">১১ ডিজিটের মোবাইল নং লিখুন। (ত্রাণ গ্রহীতার মোবাইল না থাকলে; পরিচিত কারও মোবাইল নং দিন)</small>
           </div>
 
           <div class="form-group">
             <label for="fullName">পুরো নাম (এনাইডির সাথে মিলিয়ে লিখুন)</label>
-            <input type="text" name="fullName" class="form-control" id="fullName" aria-describedby="emailHelp" placeholder="পুরো নাম লিখুন।" autocomplete="off" required>
+            <input type="text" name="fullName" class="form-control" id="fullName" placeholder="পুরো নাম লিখুন।" onkeyup="saveValue(this);" onClick="this.select();" required>
           </div>
 
           <div class="form-group">
             <label for="typeInputEmail1">ইউনিয়ন</label>
-            <select name="unionp" class="custom-select mr-sm-2" id="sel_depart" required>
+            <select name="unionp" class="custom-select mr-sm-2" id="sel_depart" onchange="saveValue(this);" required>
               <option value="">--ইউনিয়ন পরিষদ--</option>
               <?php
                 require_once('config.php');
@@ -50,8 +49,8 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label for="typeInputEmail1">রিলিফের ধরন</label>
-            <select name="serviceType" class="custom-select mr-sm-2" id="inlineFormCustomSelect" required>
+            <label for="typeInputEmail1">ত্রাণের ধরন</label>
+            <select name="serviceType" class="custom-select mr-sm-2" id="sel_relief" onchange="saveValue(this);" required>
             <option value="">--ত্রাণের ধরণ--</option>
               <?php
                 $sql = "SELECT * FROM relief_types";
@@ -69,7 +68,7 @@
 
           <div class="form-group">
             <label for="yearInputEmail1">অর্থ বছর:</label>
-            <select name="serviceFCYear" class="custom-select mr-sm-2" id="inlineFormCustomSelect" required>
+            <select name="serviceFCYear" class="custom-select mr-sm-2" id="sel_fiscal" onchange="saveValue(this);" required>
               <option value="২০১৯-২০২০">২০১৯-২০২০</option>
               <option value="২০১৮-২০১৯">২০১৮-২০১৯</option>
               <option value="২০১৭-২০১৮">২০১৭-২০১৮</option>

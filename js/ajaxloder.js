@@ -3,14 +3,29 @@ function myFunction() {
   window.print();
 }
 
-$(document).ready(function(){
+//Save the value function - save it to localStorage as (ID, VALUE)
+function saveValue(e) {
+  var id = e.id;  // get the sender's id to save it .
+  var val = e.value; // get the value.
+  localStorage.setItem(id, val);// Every time user writing something, the localStorage's value will override . 
+}
+
+//get the saved value function - return the value of "v" from localStorage.
+function getSavedValue(v) {
+  if (!localStorage.getItem(v)) {
+      return "";// You can change this to your defualt value.
+  }
+  return localStorage.getItem(v);
+}
+
+$(document).ready(function() {
   $('#showtable').DataTable();
 
   function myFunction() {
     window.print();
   }
 
-  $("#sel_depart").change(function(){
+  $("#sel_depart").change(function() {
     var unionID = $(this).val();
     // console.log(unionID);
     var data = 'number=' + unionID;
@@ -40,10 +55,19 @@ $("form.serviceEntry").submit(function(evt) {
     dataType: 'html'
   })
   .done(function(data) {
+    document.getElementById("nid").value        = getSavedValue("nid"); // set the value to this input
+    document.getElementById("mobile").value     = getSavedValue("mobile"); // set the value to this input
+    document.getElementById("fullName").value   = getSavedValue("fullName"); // set the value to this input
+    document.getElementById("sel_ward").value   = getSavedValue("sel_ward"); // set the value to this input
+    document.getElementById("sel_depart").value = getSavedValue("sel_depart"); // set the value to this input
+    document.getElementById("sel_relief").value = getSavedValue("sel_relief"); // set the value to this input
+    document.getElementById("sel_fiscal").value = getSavedValue("sel_fiscal"); // set the value to this input
+    /* Here you can add more inputs to set value. if it's saved */
+    document.getElementById("nid").focus();
     $('.serviceDetails').html(data).fadeTo('slow', 1);
   })
   .fail(function() {
-    alert('অ্যাজাক্স সাবমিশন স্ফল হয়নি ...');
+    alert('অ্যাজাক্স সাবমিশন সফল হয়নি ...');
   });
   $('form.serviceEntry').trigger("reset");
 });
@@ -64,7 +88,7 @@ function confirmPass() {
   var pass = document.getElementById("nid").value
   var confPass = document.getElementById("c_nid").value
   if(pass != confPass) {
-    $("#errorConfirm>p").text("NID does not match.");
+    $("#errorConfirm>p").text("এনআইডি ম্যাচ করেনি।");
   } else {
     $("#errorConfirm>p").fadeOut("slow");
   }

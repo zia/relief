@@ -61,7 +61,7 @@
 
   $rows = $results->rowCount();
   if ($rows>=1) {
-    $returnText = '<div class="alert alert-dismissible alert-danger" style="margin-top:10px; "><b>তথ্য পূর্বেই সংরক্ষিত হয়েছে! </b><!--<button type="button" class="btn btn-success">Edit</button>--> <br><br>এনআইডি = ' . $nid . '<br>মোবাইল = '. $mobile .',<br>নাম = ' . $fullName . ",<br>ইউনিয়ন = " . get_union_name($unionp) . ",<br>ওয়ার্ড নং = " . get_ward_name($ward) . ",<br>ত্রাণের ধরণ = " . get_relief_name($serviceType) . ',<br>অর্থবছর = ' . $serviceFCYear . '</div>';
+    $returnText = '<div class="alert alert-dismissible alert-danger" style="margin-top:10px; "><b>তথ্য পূর্বেই সংরক্ষিত হয়েছে! </b><!--<button type="button" class="btn btn-success">Edit</button>--> <br><br>এনআইডি = ' . $repDetails[0]['nid'] . '<br>মোবাইল = '. $repDetails[0]['mobile'] .',<br>নাম = ' . $repDetails[0]['name'] . ",<br>ইউনিয়ন = " . get_union_name($repDetails[0]['unionp']) . ",<br>ওয়ার্ড নং = " . get_ward_name($repDetails[0]['ward']) . ",<br>ত্রাণের ধরণ = " . get_relief_name($repDetails[0]['relief_type']) . ',<br>অর্থবছর = ' . $repDetails[0]['fiscal_year'] . '</div>';
     echo $returnText;
     exit ();
   }
