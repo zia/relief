@@ -1,6 +1,6 @@
 <?php
     require_once('config.php');
-    $returnText = '<label for="typeInputEmail1">ওয়ার্ড</label><select name="ward" class="custom-select mr-sm-2" id="sel_ward" required><option value="">--ওয়ার্ড--</option>';
+    $returnText = '<label for="typeInputEmail1">ওয়ার্ড</label><select name="ward" class="custom-select mr-sm-2" id="sel_ward" onchange="saveValue(this);" required><option value="">--ওয়ার্ড--</option>';
 
     $departid = $_GET['number'];   // department id
 
