@@ -1,73 +1,97 @@
 <?php
-//Example array.
-//$array = array('Ireland', 'England', 'Wales', 'Northern Ireland', 'Scotland');
-// Start Main Service Add
-$nid = $_POST["nid"];
-$mobile = $_POST["mobile"];
-$fullName = $_POST["fullName"];
-$unionp = $_POST["unionp"];
-$serviceType = $_POST["serviceType"];
-$serviceFCYear = $_POST["serviceFCYear"];
-if ($nid == "" && $mobile == "") {
+  // Start Main Service Add
+  $nid            = $_POST["nid"];
+  $unionp         = $_POST["unionp"];
+  $mobile         = $_POST["mobile"];
+  $fullName       = $_POST["fullName"];
+  $serviceType    = $_POST["serviceType"];
+  $serviceFCYear  = $_POST["serviceFCYear"];
+  $ward           = $_POST["ward"];
+
+  if ($nid == "" && $mobile == "") {
     $error_message = "এনাইডি অথবা মোবাইল নম্বর; যে কোন একটি অত্যাবশ্যকীয়।";
     echo '<p class="p-3 mb-2 bg-danger text-white">' .$error_message . '</p>';
     exit ();
-}
+  }
 
-require_once('config.php');
-// Check if exit
-$results = $pdo->prepare(  // $results PDO object statement hoye jay so later you can use $results as object
-  "SELECT * FROM record WHERE nid = ? or mobile = ?"
-);
-$results->bindParam(1,$nid,PDO::PARAM_INT);
-$results->bindParam(2,$mobile,PDO::PARAM_INT);
-$results->execute();
-$repDetails = $results->fetchAll(PDO::FETCH_ASSOC);
-$rows = $results->rowCount();
-if ($rows>=1) {
-  $returnText = '<div class="alert alert-dismissible alert-Danger" style="margin-top:10px; "><b>Failed! Already Exists </b><button type="button" class="btn btn-success"> Edit</button> <br>NID = ' . $nid . '<br>Mobile = '. $mobile .',<br>Full Name = ' . $fullName . ",<br> Union P = " . $unionp . ",<br>Service Type = " . $serviceType . ',<br>Service FC Year = ' . $serviceFCYear . '</div>';
-  echo $returnText;
-  exit ();
-}
-// End Check if exit
+  if(strlen($nid) !== 10 && strlen($nid) !== 17) {
+    $error_message = "এনাইডি ১০ অথবা ১৭ সংখ্যার হতে হবে; আপনার এনাইডি ১৩ সংখ্যার হলে তার পূর্বে জন্মসাল উল্লেখ করুন।";
+    echo '<p class="p-3 mb-2 bg-danger text-white">' .$error_message . '</p>';
+    exit ();
+  }
 
-$sql = "INSERT INTO record(
-            name,
-            nid,
-            mobile,
-            unionp,
-            village,
-            type,
-            date) VALUES (
-            :name,
-            :nid,
-            :mobile,
-            :unionp,
-            :village,
-            :type,
-            :date)";
+  if(strlen($mobile) != 11) {
+    $error_message = "মোবাইল নম্বর ১১ সংখ্যার হতে হবে।";
+    echo '<p class="p-3 mb-2 bg-danger text-white">' .$error_message . '</p>';
+    exit ();
+  }
 
-$stmt = $pdo->prepare($sql);
+  require_once('config.php');
 
-$stmt->bindParam(':name', $fullName, PDO::PARAM_STR);
-$stmt->bindParam(':nid', $nid, PDO::PARAM_INT);
-$stmt->bindParam(':mobile', $mobile, PDO::PARAM_INT);
-$stmt->bindParam(':unionp', $unionp, PDO::PARAM_INT);
-$stmt->bindParam(':village', $unionp, PDO::PARAM_INT);
-$stmt->bindParam(':type', $serviceType, PDO::PARAM_STR);
-$stmt->bindParam(':date', $serviceFCYear, PDO::PARAM_STR);
-// var_dump($stmt);
-if ($stmt->execute()) {
-  $newId = $pdo->lastInsertId();
-  $returnText = '<div class="alert alert-dismissible alert-success" style="margin-top:10px; "><b>Successfully Inserted with </b><button type="button" class="btn btn-success">Edit</button> <br>NID = ' . $nid . '<br>Mobile = '. $mobile .',<br>Full Name = ' . $fullName . ",<br> Union P = " . $unionp . ",<br>Service Type = " . $serviceType . ',<br>Service FC Year = ' . $serviceFCYear . '</div>';
-  echo $returnText;
-} else {
-  echo "Failed To Insert! Please Check your data again.";
-}
-// End Main Service Add
+  function get_union_name($union_id) {
+      global $pdo;
+      $result = $pdo->prepare("SELECT name FROM unions WHERE id = ?");
+      $result->bindParam(1, $union_id, PDO::PARAM_INT);
+      $result->execute();
+      return $name = $result->fetchColumn();
+  }
 
-//Encode the array into a JSON string.
-$encodedString = json_encode($_POST);
+  function get_relief_name($relief_id) {
+      global $pdo;
+      $result = $pdo->prepare("SELECT name FROM relief_types WHERE id = ?");
+      $result->bindParam(1, $relief_id, PDO::PARAM_INT);
+      $result->execute();
+      return $name = $result->fetchColumn();
+  }
 
-//Save the JSON string to a text file.
-// file_put_contents('myfile.txt', $encodedString);
+  function get_ward_name($ward_id) {
+      global $pdo;
+      $result = $pdo->prepare("SELECT name FROM wards WHERE id = ?");
+      $result->bindParam(1, $ward_id, PDO::PARAM_INT);
+      $result->execute();
+      return $name = $result->fetchColumn();
+  }
+
+  // Check if exit
+  $results = $pdo->prepare("SELECT * FROM records WHERE nid = ? or mobile = ?");
+  $results->bindParam(1,$nid,PDO::PARAM_INT);
+  $results->bindParam(2,$mobile,PDO::PARAM_INT);
+  $results->execute();
+  $repDetails = $results->fetchAll(PDO::FETCH_ASSOC);
+
+  $rows = $results->rowCount();
+  if ($rows>=1) {
+    $returnText = '<div class="alert alert-dismissible alert-danger" style="margin-top:10px; "><b>তথ্য পূর্বেই সংরক্ষিত হয়েছে! </b><!--<button type="button" class="btn btn-success">Edit</button>--> <br><br>এনআইডি = ' . $nid . '<br>মোবাইল = '. $mobile .',<br>নাম = ' . $fullName . ",<br>ইউনিয়ন = " . get_union_name($unionp) . ",<br>ওয়ার্ড নং = " . get_ward_name($ward) . ",<br>ত্রাণের ধরণ = " . get_relief_name($serviceType) . ',<br>অর্থবছর = ' . $serviceFCYear . '</div>';
+    echo $returnText;
+    exit ();
+  }
+  // End Check if exit
+
+  $sql = "INSERT INTO records(name, nid, mobile, unionp, ward, relief_type, fiscal_year) VALUES (:name, :nid, :mobile, :unionp, :ward, :relief_type, :fiscal_year)";
+
+  $stmt = $pdo->prepare($sql);
+
+  $stmt->bindParam(':name', $fullName, PDO::PARAM_STR);
+  $stmt->bindParam(':nid', $nid, PDO::PARAM_INT);
+  $stmt->bindParam(':mobile', $mobile, PDO::PARAM_STR);
+  $stmt->bindParam(':unionp', $unionp, PDO::PARAM_INT);
+  $stmt->bindParam(':ward', $ward, PDO::PARAM_INT);
+  $stmt->bindParam(':relief_type', $serviceType, PDO::PARAM_STR);
+  $stmt->bindParam(':fiscal_year', $serviceFCYear, PDO::PARAM_STR);
+
+  // var_dump($stmt);
+  if ($stmt->execute()) {
+    $newId = $pdo->lastInsertId();
+    $returnText = '<div class="alert alert-dismissible alert-success" style="margin-top:10px; "><b>তথ্য সরক্ষিত হয়েছে! </b><!--<button type="button" class="btn btn-success">Edit</button>--><br>এনআইডি = ' . $nid . '<br>মোবাইল = '. $mobile .',<br>নাম = ' . $fullName . ",<br>ইউনিয়ন = " . get_union_name($unionp) . ",<br>ওয়ার্ড নং = " . get_ward_name($ward) . ",<br>ত্রাণের ধরণ = " . get_relief_name($serviceType) . ',<br>অর্থবছর = ' . $serviceFCYear . '</div>';
+    echo $returnText;
+  }
+  else {
+    echo "তথ্য সংরক্ষণ সম্ভব হয় নি, আপনার প্রদত্ত তথ্য পুনরায় মূল্যায়ন করুন।";
+  }
+  // End Main Service Add
+
+  //Encode the array into a JSON string.
+  $encodedString = json_encode($_POST);
+
+  //Save the JSON string to a text file.
+  // file_put_contents('myfile.txt', $encodedString);

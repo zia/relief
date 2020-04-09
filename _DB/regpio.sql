@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2020 at 11:59 AM
+-- Generation Time: Apr 09, 2020 at 08:04 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -25,43 +25,76 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `record`
+-- Table structure for table `records`
 --
 
-CREATE TABLE `record` (
+CREATE TABLE `records` (
   `id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
   `nid` varchar(20) NOT NULL,
-  `mobile` int(20) NOT NULL,
+  `mobile` varchar(11) CHARACTER SET utf8 DEFAULT NULL,
   `unionp` int(3) NOT NULL,
-  `village` int(10) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `date` varchar(20) NOT NULL
+  `ward` int(10) NOT NULL,
+  `relief_type` int(1) NOT NULL,
+  `fiscal_year` varchar(20) NOT NULL,
+  `signature` varchar(255) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `record`
+-- Dumping data for table `records`
 --
 
-INSERT INTO `record` (`id`, `name`, `nid`, `mobile`, `unionp`, `village`, `type`, `date`) VALUES
-(41, 'Dewan Md. Ziaur Rahman', '6861525001', 1683113211, 1, 1, 'Corona Relief', '2019-2020');
+INSERT INTO `records` (`id`, `name`, `nid`, `mobile`, `unionp`, `ward`, `relief_type`, `fiscal_year`, `signature`) VALUES
+(41, 'Dewan Md. Ziaur Rahman', '6861525001', '1683113211', 1, 1, 4, '২০১৯-২০', NULL),
+(42, 'Md. Ziaur Rahman', '19934798525000164', '1711732399', 2, 2, 2, '২০১৮-১৯', NULL),
+(43, 'আব্দুর রহিম', '19937819511000166', '1765788407', 4, 4, 3, '২০১৯-২০', NULL),
+(44, 'wdwdwdwddwwdwd', '12345678901234567', '2147483647', 2, 2, 4, '২০১৯-২০', NULL),
+(45, 'djegjgdjgdjgj', '6861525002', '1793661290', 7, 7, 1, '২০১৯-২০২০', NULL),
+(46, 'Tridip Sarker', '6861525004', '1671266777', 7, 7, 1, '২০১৯-২০২০', NULL),
+(47, 'dfgfdhghghg', '6861525033', '1912849573', 1, 4, 1, '২০১৯-২০২০', NULL),
+(48, 'sekjhkskhskhskhg', '6861525099', '01826625708', 5, 32, 1, '২০১৯-২০২০', NULL),
+(49, 'skkfhukfhsuksfhkhf', '6861525007', '01724407551', 5, 33, 4, '২০১৯-২০২০', NULL),
+(50, 'Shakib Al Hassan', '6861525009', '01912849583', 4, 22, 3, '২০১৯-২০২০', NULL),
+(51, 'Tamim Iqbal', '6861525011', '01670147333', 3, 17, 2, '২০১৯-২০২০', NULL),
+(52, 'AP MiRAZ', '6861525013', '01915466145', 4, 26, 4, '২০১৯-২০২০', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `unionpori`
+-- Table structure for table `relief_types`
 --
 
-CREATE TABLE `unionpori` (
+CREATE TABLE `relief_types` (
   `id` int(3) NOT NULL,
-  `union_name` varchar(100) NOT NULL
+  `name` varchar(50) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `unionpori`
+-- Dumping data for table `relief_types`
 --
 
-INSERT INTO `unionpori` (`id`, `union_name`) VALUES
+INSERT INTO `relief_types` (`id`, `name`) VALUES
+(4, 'করোনা রিলিফ'),
+(1, 'টিন'),
+(3, 'ভিজিএফ'),
+(2, 'সোলার');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unions`
+--
+
+CREATE TABLE `unions` (
+  `id` int(3) NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `unions`
+--
+
+INSERT INTO `unions` (`id`, `name`) VALUES
 (1, 'দশমিনা সদর'),
 (2, 'রণগোপালদী'),
 (3, 'বেতাগী সানকিপুর'),
@@ -73,122 +106,130 @@ INSERT INTO `unionpori` (`id`, `union_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `id` int(3) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `role` int(1) NOT NULL DEFAULT 0 COMMENT '0 = user, 1 = super user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `password`) VALUES
-(2, 'zia363', 'zia.1993.rahman@gmail.com', '$2y$10$sJEbiNMXQw0RwT/t7oDiBO6sBOCX7xkJsMrfv9RmVqS18UVon4HuO');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`) VALUES
+(3, 'admin', 'admin@admin.admin', '$2y$10$MPe9pmDd9pe64o9myFR6YORKyD/wI5DtNi2qLdX5zbFcqT7sY9Tam', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `village`
+-- Table structure for table `wards`
 --
 
-CREATE TABLE `village` (
+CREATE TABLE `wards` (
   `id` int(10) NOT NULL,
-  `name` varchar(222) NOT NULL,
-  `unionp` int(3) NOT NULL,
-  `word` int(10) NOT NULL
+  `name` varchar(255) DEFAULT NULL,
+  `unionp` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `village`
+-- Dumping data for table `wards`
 --
 
-INSERT INTO `village` (`id`, `name`, `unionp`, `word`) VALUES
-(1, 'গ্রাম-১', 1, 1),
-(2, 'গ্রাম-২', 1, 2),
-(3, 'গ্রাম-৩', 1, 3),
-(4, 'গ্রাম-৪', 1, 4),
-(5, 'গ্রাম-৫', 1, 5),
-(6, 'গ্রাম-৬', 1, 6),
-(7, 'গ্রাম-৭', 1, 7),
-(8, 'গ্রাম-১', 2, 1),
-(9, 'গ্রাম-২', 2, 2),
-(10, 'গ্রাম-৩', 2, 3),
-(11, 'গ্রাম-৪', 2, 4),
-(12, 'গ্রাম-৫', 2, 5),
-(13, 'গ্রাম-৬', 2, 6),
-(14, 'গ্রাম-৭', 2, 7),
-(15, 'গ্রাম-১', 3, 1),
-(16, 'গ্রাম-২', 3, 2),
-(17, 'গ্রাম-৩', 3, 3),
-(18, 'গ্রাম-৪', 3, 4),
-(19, 'গ্রাম-৫', 3, 5),
-(20, 'গ্রাম-৬', 3, 6),
-(21, 'গ্রাম-৭', 3, 7),
-(22, 'গ্রাম-১', 4, 1),
-(23, 'গ্রাম-২', 4, 2),
-(24, 'গ্রাম-৩', 4, 3),
-(25, 'গ্রাম-৪', 4, 4),
-(26, 'গ্রাম-৫', 4, 5),
-(27, 'গ্রাম-৬', 4, 6),
-(28, 'গ্রাম-৭', 4, 7),
-(29, 'গ্রাম-১', 5, 1),
-(30, 'গ্রাম-২', 5, 2),
-(31, 'গ্রাম-৩', 5, 3),
-(32, 'গ্রাম-৪', 5, 4),
-(33, 'গ্রাম-৫', 5, 5),
-(34, 'গ্রাম-৬', 5, 6),
-(35, 'গ্রাম-৭', 5, 7),
-(36, 'গ্রাম-১', 6, 1),
-(37, 'গ্রাম-২', 6, 2),
-(38, 'গ্রাম-৩', 6, 3),
-(39, 'গ্রাম-৪', 6, 4),
-(40, 'গ্রাম-৫', 6, 5),
-(41, 'গ্রাম-৬', 6, 6),
-(42, 'গ্রাম-৭', 6, 7),
-(43, 'গ্রাম-১', 7, 1),
-(44, 'গ্রাম-২', 7, 2),
-(45, 'গ্রাম-৩', 7, 3),
-(46, 'গ্রাম-৪', 7, 4),
-(47, 'গ্রাম-৫', 7, 5),
-(48, 'গ্রাম-৬', 7, 6),
-(49, 'গ্রাম-৭', 7, 7);
+INSERT INTO `wards` (`id`, `name`, `unionp`) VALUES
+(1, '১', 1),
+(2, '২', 1),
+(3, '৩', 1),
+(4, '৪', 1),
+(5, '৫', 1),
+(6, '৬', 1),
+(7, '৭', 1),
+(8, '১', 2),
+(9, '২', 2),
+(10, '৩', 2),
+(11, '৪', 2),
+(12, '৫', 2),
+(13, '৬', 2),
+(14, '৭', 2),
+(15, '১', 3),
+(16, '২', 3),
+(17, '৩', 3),
+(18, '৪', 3),
+(19, '৫', 3),
+(20, '৬', 3),
+(21, '৭', 3),
+(22, '১', 4),
+(23, '২', 4),
+(24, '৩', 4),
+(25, '৪', 4),
+(26, '৫', 4),
+(27, '৬', 4),
+(28, '৭', 4),
+(29, '১', 5),
+(30, '২', 5),
+(31, '৩', 5),
+(32, '৪', 5),
+(33, '৫', 5),
+(34, '৬', 5),
+(35, '৭', 5),
+(36, '১', 6),
+(37, '২', 6),
+(38, '৩', 6),
+(39, '৪', 6),
+(40, '৫', 6),
+(41, '৬', 6),
+(42, '৭', 6),
+(43, '১', 7),
+(44, '২', 7),
+(45, '৩', 7),
+(46, '৪', 7),
+(47, '৫', 7),
+(48, '৬', 7),
+(49, '৭', 7);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `record`
+-- Indexes for table `records`
 --
-ALTER TABLE `record`
+ALTER TABLE `records`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `nid` (`nid`),
   ADD KEY `unionp` (`unionp`),
-  ADD KEY `village` (`village`);
+  ADD KEY `village` (`ward`),
+  ADD KEY `type` (`relief_type`);
 
 --
--- Indexes for table `unionpori`
+-- Indexes for table `relief_types`
 --
-ALTER TABLE `unionpori`
+ALTER TABLE `relief_types`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `unions`
+--
+ALTER TABLE `unions`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Indexes for table `users`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `village`
+-- Indexes for table `wards`
 --
-ALTER TABLE `village`
+ALTER TABLE `wards`
   ADD PRIMARY KEY (`id`,`unionp`),
   ADD KEY `unionp` (`unionp`);
 
@@ -197,33 +238,40 @@ ALTER TABLE `village`
 --
 
 --
--- AUTO_INCREMENT for table `record`
+-- AUTO_INCREMENT for table `records`
 --
-ALTER TABLE `record`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+ALTER TABLE `records`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `relief_types`
 --
-ALTER TABLE `user`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `relief_types`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `record`
+-- Constraints for table `records`
 --
-ALTER TABLE `record`
-  ADD CONSTRAINT `record_ibfk_1` FOREIGN KEY (`unionp`) REFERENCES `unionpori` (`id`),
-  ADD CONSTRAINT `record_ibfk_2` FOREIGN KEY (`village`) REFERENCES `village` (`id`);
+ALTER TABLE `records`
+  ADD CONSTRAINT `records_ibfk_1` FOREIGN KEY (`unionp`) REFERENCES `unions` (`id`),
+  ADD CONSTRAINT `records_ibfk_2` FOREIGN KEY (`ward`) REFERENCES `wards` (`id`),
+  ADD CONSTRAINT `records_ibfk_3` FOREIGN KEY (`relief_type`) REFERENCES `relief_types` (`id`);
 
 --
--- Constraints for table `village`
+-- Constraints for table `wards`
 --
-ALTER TABLE `village`
-  ADD CONSTRAINT `village_ibfk_1` FOREIGN KEY (`unionp`) REFERENCES `unionpori` (`id`);
+ALTER TABLE `wards`
+  ADD CONSTRAINT `wards_ibfk_1` FOREIGN KEY (`unionp`) REFERENCES `unions` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
