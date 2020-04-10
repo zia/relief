@@ -1,14 +1,21 @@
 <?php
+	function clean_input($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = strip_tags($data);
+		$data = htmlspecialchars($data);
+		return $data;
+	}
 	require_once 'config.php';
 	session_start();
 	if(isset($_SESSION["user_login"])) {
 		header("location: index.php");
 	}
 
-	if(isset($_REQUEST['btn_login'])) {
-		$username	=strip_tags($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
-		$email		=strip_tags($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
-		$password	=strip_tags($_REQUEST["txt_password"]);			//textbox name "txt_password"
+	if(isset($_REQUEST['btn_login']) && $_SERVER["REQUEST_METHOD"] == "POST") {
+		$email		= clean_input($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
+		$username	= clean_input($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
+		$password	= clean_input($_REQUEST["txt_password"]);		//textbox name "txt_password"
 
 		if(empty($username)) {
 			$errorMsg[]="একটি ইউজারনেম লিখুন।";	//check "username/email" textbox not empty 
@@ -21,13 +28,16 @@
 		}
 		else {
 			try {
-				$select_stmt=$pdo->prepare("SELECT * FROM users WHERE username=:uname OR email=:uemail"); //sql select query
-				$select_stmt->execute(array(':uname'=>$username, ':uemail'=>$email));	//execute query with bind parameter
-				$row=$select_stmt->fetch(PDO::FETCH_ASSOC);
+				$result = $pdo->prepare("SELECT * FROM users WHERE username=? OR email=?");;
+				$result->bindParam(1, $username, PDO::PARAM_STR);
+				$result->bindParam(2, $email, PDO::PARAM_STR);
+				$result->execute();
+				$row = $result->fetch(PDO::FETCH_ASSOC);
 
-				if($select_stmt->rowCount() > 0) {
-					if($username==$row["username"] OR $email==$row["email"]) {
-						if(password_verify($password, $row["password"])) {
+				if($result->rowCount() > 0) {
+					if($username === $row["username"] OR $email === $row["email"]) {
+						// more hashes could be added
+						if(password_verify(md5($password), $row["password"])) {
 							$_SESSION["user_login"] = $row["id"];
 							$loginMsg = "লগইন সফল হয়েছে!";
 							header("refresh:2; index.php");
@@ -87,7 +97,7 @@
 						}
 						?>
 					<center><h2>লগইন পেজ</h2></center>
-					<form method="post" class="form-horizontal">
+					<form method="post" class="form-horizontal" action="<?=htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">ইউজারনেম অথবা ইমেইল</label>
 							<div class="col-sm-6">
