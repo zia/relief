@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2020 at 01:20 PM
+-- Generation Time: Apr 10, 2020 at 07:30 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -56,7 +56,11 @@ INSERT INTO `records` (`id`, `name`, `nid`, `mobile`, `unionp`, `ward`, `relief_
 (49, 'skkfhukfhsuksfhkhf', '6861525007', '01724407551', 5, 33, 4, '২০১৯-২০২০', NULL),
 (50, 'Shakib Al Hassan', '6861525009', '01912849583', 4, 22, 3, '২০১৯-২০২০', NULL),
 (51, 'Tamim Iqbal', '6861525011', '01670147333', 3, 17, 2, '২০১৯-২০২০', NULL),
-(52, 'AP MiRAZ', '6861525013', '01915466145', 4, 26, 4, '২০১৯-২০২০', NULL);
+(52, 'AP MiRAZ', '6861525013', '01915466145', 4, 26, 4, '২০১৯-২০২০', NULL),
+(53, 'Mustafizur Rahman', '19934798525000166', '01683113212', 2, 10, 1, '২০১৮-২০১৯', NULL),
+(54, 'Mustafizur Rahman', '19934798525000162', '01683113213', 2, 10, 1, '২০১৮-২০১৯', NULL),
+(55, 'MustFIZUR Rahman', '19934798525000167', '01683113217', 3, 17, 4, '২০১৮-২০১৯', NULL),
+(56, 'dewanmdziaurrahman', '6861525017', '01711732398', 3, 18, 4, '২০১৮-২০১৯', NULL);
 
 -- --------------------------------------------------------
 
@@ -122,7 +126,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`) VALUES
-(3, 'admin', 'admin@admin.admin', '$2y$10$MPe9pmDd9pe64o9myFR6YORKyD/wI5DtNi2qLdX5zbFcqT7sY9Tam', 1);
+(4, 'admin', 'admin@admin.admin', '$2y$10$JYLDt3YRg61l6GB/yKclk.jhxMShCepb9U3nQr9oU7dx/GPKkBR9O', 0);
 
 -- --------------------------------------------------------
 
@@ -241,7 +245,7 @@ ALTER TABLE `wards`
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `relief_types`
@@ -253,7 +257,7 @@ ALTER TABLE `relief_types`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
