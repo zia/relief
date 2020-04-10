@@ -18,7 +18,7 @@
 		else {
 			try {
 				if(!isset($errorMsg)) {
-                    $new_password = password_hash($new_password, PASSWORD_DEFAULT);
+                    $new_password = password_hash(md5($new_password), PASSWORD_DEFAULT);
 					$update_stmt = $pdo->prepare("UPDATE users SET password=:upassword WHERE id=:uid"); 	//sql insert query
 					if($update_stmt->execute(array(':upassword' => $new_password, ':uid' => $_SESSION['user_id']))) {
                         $registerMsg="পাসওয়ার্ড রিসেট সফল হয়েছে, অনুগ্রহ করে লগইন করুন।";
