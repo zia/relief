@@ -16,7 +16,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <form class="serviceEntry inputForm">
+        <form class="emergency inputForm">
           <div class="form-group">
             <label for="NID">এনআইডি* (১০ অথবা ১৭ সংখ্যার এনাইডি লিখুন)</label>
             <input type="text" name="nid" class="form-control" id="nid" placeholder="ন্যাশনাল আইডি নং দিন।" onkeyup="saveValue(this);" onClick="this.select();" required>

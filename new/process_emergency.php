@@ -5,7 +5,6 @@
   $mobile         = $_POST["mobile"];
   $fullName       = $_POST["fullName"];
   $serviceType    = $_POST["serviceType"];
-  
   $ward           = $_POST["ward"];
 
   if ($nid == "" && $mobile == "") {

@@ -76,14 +76,6 @@ $("form.serviceEntry").submit(function(evt) {
     data: $(this).serialize(), // it will serialize the form data
     dataType: 'html'
   })
-  $("form.emergency").submit(function(evt) {
-  evt.preventDefault();
-  $.ajax({
-    url: 'process_emergency.php',
-    type: 'POST',
-    data: $(this).serialize(), // it will serialize the form data
-    dataType: 'html'
-  })
   .done(function(data) {
     $('#nid').val(getSavedValue("nid"));
     $('#mobile').val(getSavedValue("mobile"));
@@ -102,6 +94,31 @@ $("form.serviceEntry").submit(function(evt) {
   $('form.serviceEntry').trigger("reset");
 });
 
+$("form.emergency").submit(function(evt) {
+  evt.preventDefault();
+  $.ajax({
+    url: 'process_emergency.php',
+    type: 'POST',
+    data: $(this).serialize(), // it will serialize the form data
+    dataType: 'html'
+  })
+  .done(function(data) {
+    // $('#nid').val(getSavedValue("nid"));
+    // $('#mobile').val(getSavedValue("mobile"));
+    // $('#fullName').val(getSavedValue("fullName"));
+    // $('#sel_ward').val(getSavedValue("sel_ward"));
+    // $('#sel_depart').val(getSavedValue("sel_depart"));
+    // $('#sel_relief').val(getSavedValue("sel_relief"));
+    // $('#sel_fiscal').val(getSavedValue("sel_fiscal"));
+    /* Here you can add more inputs to set value. if it's saved */
+    document.getElementById("nid").focus();
+    $('.serviceDetails').html(data).fadeTo('slow', 1);
+  })
+  .fail(function() {
+    alert('অ্যাজাক্স সাবমিশন সফল হয়নি ...');
+  });
+  $('form.emergency').trigger("reset");
+});
 // Search Result
 $("form.regSearch").submit(function(evt) {
     evt.preventDefault();
