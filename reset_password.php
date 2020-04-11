@@ -1,4 +1,11 @@
 <?php
+	function clean_input($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = strip_tags($data);
+		$data = htmlspecialchars($data);
+		return $data;
+	}
 	require_once "config.php";
     session_start();
 	if(isset($_SESSION["user_login"])) {
@@ -6,8 +13,8 @@
 	}
 
 	if(isset($_REQUEST['btn_reset'])) {
-		$new_password	    = strip_tags($_REQUEST['txt_password']);	//textbox name "txt_email"
-        $confirm_password	= strip_tags($_REQUEST['confirm_txt_password']);	//textbox name "txt_email"
+		$new_password	    = clean_input($_REQUEST['txt_password']);	//textbox name "txt_email"
+        $confirm_password	= clean_input($_REQUEST['confirm_txt_password']);	//textbox name "txt_email"
 
 		if(strlen($new_password) < 6) {
 			$errorMsg[] = "নুন্যতম ৬ অক্ষরের পাসওয়ার্ড প্রদান করুন";	//check passowrd must be 6 characters
@@ -19,8 +26,10 @@
 			try {
 				if(!isset($errorMsg)) {
                     $new_password = password_hash(md5($new_password), PASSWORD_DEFAULT);
-					$update_stmt = $pdo->prepare("UPDATE users SET password=:upassword WHERE id=:uid"); 	//sql insert query
-					if($update_stmt->execute(array(':upassword' => $new_password, ':uid' => $_SESSION['user_id']))) {
+					$result = $pdo->prepare("UPDATE users SET password=? WHERE id=?");;
+					$result->bindParam(1, $new_password, PDO::PARAM_STR);
+					$result->bindParam(2, $_SESSION['user_id'], PDO::PARAM_INT);
+					if($result->execute()) {
                         $registerMsg="পাসওয়ার্ড রিসেট সফল হয়েছে, অনুগ্রহ করে লগইন করুন।";
                         header("refresh:2; login.php");
 					}
@@ -73,14 +82,14 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label">নতুন পাসওয়ার্ড</label>
 					<div class="col-sm-6">
-						<input type="password" name="txt_password" class="form-control" placeholder="৬ অক্ষরের একটি নতুন পাসওয়ার্ড দিন" />
+						<input type="password" name="txt_password" class="form-control" placeholder="৬ অক্ষরের একটি নতুন পাসওয়ার্ড দিন" required/>
 					</div>
 				</div>
 
                 <div class="form-group">
 					<label class="col-sm-3 control-label">কনফার্ম পাসওয়ার্ড</label>
 					<div class="col-sm-6">
-						<input type="password" name="confirm_txt_password" class="form-control" placeholder="প্রদানকৃত পাসওয়ার্ডটি পুনরায় লিখুন" />
+						<input type="password" name="confirm_txt_password" class="form-control" placeholder="প্রদানকৃত পাসওয়ার্ডটি পুনরায় লিখুন" required/>
 					</div>
 				</div>
 

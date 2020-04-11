@@ -39,7 +39,9 @@
 						// more hashes could be added
 						if(password_verify(md5($password), $row["password"])) {
 							$_SESSION["user_login"] = $row["id"];
-							$loginMsg = "লগইন সফল হয়েছে!";
+							$loginMsg = $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(24));
+
+							// $loginMsg = "লগইন সফল হয়েছে!";
 							header("refresh:2; index.php");
 						}
 						else {
@@ -96,7 +98,11 @@
 						<?php
 						}
 						?>
-					<center><h2>লগইন পেজ</h2></center>
+					<center>
+						<h2>ত্রাণ বিতরণ সিস্টেমে (আরডিএস) স্বাগতম।</h2>
+						<small>অনুগ্রহ করে নিম্নোক্ত ফর্মটি ব্যবহার করে লগইন করুন।</small>
+					</center>
+					<br>
 					<form method="post" class="form-horizontal" action="<?=htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">ইউজারনেম অথবা ইমেইল</label>
@@ -111,6 +117,23 @@
 								<input type="password" name="txt_password" class="form-control" placeholder="পাসওয়ার্ড প্রদান করুন" required />
 							</div>
 						</div>
+
+						<!--<div class="form-group">
+							<label class="col-sm-3 control-label">উপজেলা নির্বাচন করুন</label>
+							<div class="col-sm-3">
+								<select name="sel_upazila" class="form-control" id="sel_ward" onchange="saveValue(this);" required>
+									<option value="">--উপজেলা--</option>
+									<?php
+										// $sql = $pdo->prepare("SELECT id, name FROM upazilas");
+										// $sql->execute();
+										// $upazilas = $sql->fetchAll(PDO::FETCH_ASSOC);
+										// foreach($upazilas as $upazila) {
+										// 	echo "<option value='".$upazila['id']."' >".$upazila['name']."</option>";
+										// }
+									?>
+								</select>
+							</div>
+						</div>-->
 
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-9 m-t-15">

@@ -1,4 +1,7 @@
 <?php
+    // if(!isset($_POST['token'])){
+    //     throw new Exception('No token found!');
+    // }
     require_once('config.php');
     function get_union_name($union_id) {
         global $pdo;
@@ -28,7 +31,7 @@
         $repDetails = $results->fetchAll(PDO::FETCH_ASSOC);
         $rows = $results->rowCount();
 
-    // if empty($user) = TRUE, set $status = "anonymous"
+        // if empty($user) = TRUE, set $status = "anonymous"
         $service = ($rows==1) ? "টি ত্রাণ" : "টি ত্রাণ";
         //var_dump($repDetails); // Data Ok
         if(empty($repDetails)) {

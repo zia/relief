@@ -98,7 +98,7 @@ $("form.serviceEntry").submit(function(evt) {
 $("form.regSearch").submit(function(evt) {
     evt.preventDefault();
     var url = "repDetails.php?id=" + $("#search").val();
-    //alert(data);
+    // alert(data);
     $.get( url, function(data, status) {
       $("#txtHint").html( data );
       //alert("Data: " + data + "\nStatus: " + status);

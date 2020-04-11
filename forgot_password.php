@@ -1,4 +1,11 @@
 <?php
+	function clean_input($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = strip_tags($data);
+		$data = htmlspecialchars($data);
+		return $data;
+	}
 	require_once 'config.php';
 	session_start();
 	if(isset($_SESSION["user_login"])) {
@@ -6,22 +13,24 @@
 	}
 
 	if(isset($_REQUEST['btn_reset'])) {
-		$username	=strip_tags($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
-		$email		=strip_tags($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
+		$username	= clean_input($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
+		$email		= clean_input($_REQUEST["txt_username_email"]);	//textbox name "txt_username_email"
 
 		if(empty($username)) {
-			$errorMsg[]="একটি ইউজারনেম লিখুন।";	//check "username/email" textbox not empty 
+			$errorMsg[]="একটি ইউজারনেম লিখুন।";	//check "username/email" textbox not empty
 		}
 		else if(empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$errorMsg[]="সঠিক ইমেইল এড্রেস লিখুন।";	//check "username/email" textbox not empty 
+			$errorMsg[]="সঠিক ইমেইল এড্রেস লিখুন।";	//check "username/email" textbox not empty
 		}
 		else {
 			try {
-				$select_stmt=$pdo->prepare("SELECT * FROM users WHERE username=:uname OR email=:uemail"); //sql select query
-				$select_stmt->execute(array(':uname'=>$username, ':uemail'=>$email));	//execute query with bind parameter
-				$row=$select_stmt->fetch(PDO::FETCH_ASSOC);
+				$result = $pdo->prepare("SELECT * FROM users WHERE username=? OR email=?");;
+				$result->bindParam(1, $username, PDO::PARAM_STR);
+				$result->bindParam(2, $email, PDO::PARAM_STR);
+				$result->execute();
+				$row = $result->fetch(PDO::FETCH_ASSOC);
 
-				if($select_stmt->rowCount() > 0) {
+				if($result->rowCount() > 0) {
 					if($username==$row["username"] OR $email==$row["email"]) {
                         $_SESSION["user_id"] = $row["id"];
                         $loginMsg = "নতুন পাসওয়ার্ড দিন!";
@@ -82,7 +91,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">ইউজারনেম অথবা ইমেইল</label>
 							<div class="col-sm-6">
-								<input type="text" name="txt_username_email" class="form-control" placeholder="ইউজারনেম অথবা ইমেইল প্রদান করুন" />
+								<input type="text" name="txt_username_email" class="form-control" placeholder="ইউজারনেম অথবা ইমেইল প্রদান করুন" required/>
 							</div>
 						</div>
 
