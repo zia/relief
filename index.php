@@ -1,17 +1,16 @@
 <?php
-	require_once 'config.php';
-	session_start();
+  require_once 'config.php';
+  include('header.php');
 	if(!isset($_SESSION["user_login"])) {
 		header("location: login.php");
   }
   if(!isset($_SESSION['token'])){
     throw new Exception('No token found!');
   }
-  include('header.php');
 ?>
 
 <div class="s130">
-    <form class="regSearch" method="post" action="repDetails.php">
+    <form class="regSearch" method="post" action="<?=htmlspecialchars("repDetails.php");?>">
       <div class="inner-form">
         <div class="input-field first-wrap">
           <div class="svg-wrapper">

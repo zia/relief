@@ -40,7 +40,11 @@ $(document).ready(function() {
         extend: 'print',
         title: $('#union_heading').text()
       },
-    ]
+    ],
+    language: {
+      searchPlaceholder: "অনুসন্ধান করুন",
+      search: "",
+    }
   });
 
   function myFunction() {
@@ -49,7 +53,6 @@ $(document).ready(function() {
 
   $("#sel_depart").change(function() {
     var unionID = $(this).val();
-    // console.log(unionID);
     var data = 'number=' + unionID;
     $.ajax({
       url: 'autodropdown.php',
@@ -84,6 +87,8 @@ $("form.serviceEntry").submit(function(evt) {
     $('#sel_depart').val(getSavedValue("sel_depart"));
     $('#sel_relief').val(getSavedValue("sel_relief"));
     $('#sel_fiscal').val(getSavedValue("sel_fiscal"));
+    $('#age').val(getSavedValue("age"));
+    $('#sel_gender').val(getSavedValue("sel_gender"));
     /* Here you can add more inputs to set value. if it's saved */
     document.getElementById("nid").focus();
     $('.serviceDetails').html(data).fadeTo('slow', 1);
@@ -114,4 +119,16 @@ function confirmPass() {
   } else {
     $("#errorConfirm>p").fadeOut("slow");
   }
+}
+
+/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
 }

@@ -1,5 +1,5 @@
 <?php include('header.php'); ?>
-
+<br>
 <section class="inputform">
   <div class="container">
     <div class="row">
@@ -76,6 +76,21 @@
             </select>
           </div>
 
+          <div class="form-group">
+            <label for="age">বয়স</label>
+            <input type="number" name="age" class="form-control" id="age" aria-describedby="ageHelp" placeholder="ত্রাণগ্রহীতার বয়স" onkeyup="saveValue(this);" onClick="this.select();" required>
+            <small id="ageHelp" class="form-text text-muted">ত্রাণ গ্রহীতার বয়স (উর্ধ্বসীমা অনুযায়ী) লিখুন। উদাহরনঃ বয়স ৩৩ বছর ৪ মাস হলে; ৩৪ লিখুন।</small>
+          </div>
+
+          <div class="form-group">
+            <label for="genderInput">ত্রাণগ্রহীতার ধরণ:</label>
+            <select name="sel_gender" class="custom-select mr-sm-2" id="sel_gender" onchange="saveValue(this);" required>
+            <option value="">--ত্রাণগ্রহীতার ধরণ নির্বাচন করুন--</option>
+              <option value="1">পুরুষ</option>
+              <option value="0">মহিলা</option>
+            </select>
+          </div>
+
           <div class="form-group text-right">
             <button type="submit" class="btn btn-primary">সংরক্ষণ</button>
           </div>
@@ -86,5 +101,4 @@
     </div>
   </div>
 </section>
-<br><br>
 <?php include('footer.php'); ?>

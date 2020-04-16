@@ -4,7 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title> ঃঃআরডিএস সিস্টেমঃঃ</title>
+    <!-- add icon link -->
+    <link rel = "icon" href = "./images/logo.png" type = "image/x-icon" />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/fonts.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/datatables.min.css"/>
     <link href="css/main.css" rel="stylesheet" />
@@ -12,12 +16,25 @@
   </head>
 
   <body>
-    <header class="container d-print-none">
-        <ul class="menu">
-          <li><a href="index.php">নীড় পাতা</a></li>
-          <li><a href="serviceadd.php">সেবা গ্রহীতা সংযোজন</a></li>
-          <li><a href="#">তালিকা দেখুন</a>
-          <ul class="dropdown-menu">
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+
+      <a class="navbar-brand" onclick="openNav()">
+        <img style="max-width:35px; max-height:35px; margin-top: -7px;" src="./images/logo.png"> উপজেলা প্রশাসন, দশমিনা, পটুয়াখালী
+        <!-- <img style="max-width:35px; max-height:35px; margin-top: -7px;" src="./images/logo.png"> আরডিএস, পটুয়াখালী-১১৩ -->
+      </a>
+
+      <div class="navbar-collapse justify-content-end">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="index.php">নীড় পাতা</a>
+          </li>
+          <li class="nav-item">
+            <a href="serviceadd.php">সেবা গ্রহীতা সংযোজন</a>
+          </li>
+          <li class="nav-item">
+            <a href="#">তালিকা দেখুন</a>
+            <ul class="dropdown-menu">
             <?php
               require_once 'config.php';
               $results = $pdo->prepare("SELECT * FROM unions");
@@ -29,6 +46,23 @@
             ?>
             </ul>
           </li>
-          <li><a href="logout.php">লগআউট</a></li>
+          <li class="nav-item">
+            <a href="logout.php">লগআউট</a>
+          </li>
         </ul>
-      </header>
+      </div>
+    </nav>
+    <?php
+      session_start();
+      // Only super user
+      if($_SESSION["role"] == 1) {
+    ?>
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">Users</a>
+        <a href="#">Emg Relief Req's</a>
+        <a href="#">Volunteers</a>
+        <a href="#">Inventory</a>
+        <a href="#">Officials</a>
+      </div>
+    <?php } ?>

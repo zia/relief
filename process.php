@@ -7,6 +7,8 @@
   $serviceType    = $_POST["serviceType"];
   $serviceFCYear  = $_POST["serviceFCYear"];
   $ward           = $_POST["ward"];
+  $age            = $_POST["age"];
+  $gender         = $_POST["sel_gender"];;
 
   if ($nid == "" && $mobile == "") {
     $error_message = "এনাইডি অথবা মোবাইল নম্বর; যে কোন একটি অত্যাবশ্যকীয়।";
@@ -67,11 +69,13 @@
   }
   // End Check if exit
 
-  $sql = "INSERT INTO records(name, nid, mobile, unionp, ward, relief_type, fiscal_year) VALUES (:name, :nid, :mobile, :unionp, :ward, :relief_type, :fiscal_year)";
+  $sql = "INSERT INTO records(name, age, gender, nid, mobile, unionp, ward, relief_type, fiscal_year) VALUES (:name, :age, :gender, :nid, :mobile, :unionp, :ward, :relief_type, :fiscal_year)";
 
   $stmt = $pdo->prepare($sql);
 
   $stmt->bindParam(':name', $fullName, PDO::PARAM_STR);
+  $stmt->bindParam(':age', $age, PDO::PARAM_INT);
+  $stmt->bindParam(':gender', $gender, PDO::PARAM_INT);
   $stmt->bindParam(':nid', $nid, PDO::PARAM_INT);
   $stmt->bindParam(':mobile', $mobile, PDO::PARAM_STR);
   $stmt->bindParam(':unionp', $unionp, PDO::PARAM_INT);
