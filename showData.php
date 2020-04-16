@@ -12,17 +12,23 @@
   }
   include('header.php');
 ?>
+
 <section class="inputform" style="margin-bottom: 25px;">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <?php
           $place = !isset($_GET['union']) ? 'pou' : $_GET['union'];
-          // file_put_contents('myfile33.txt', $place); getch(); - Word, - Under Union
           $tBody = "";
           try {
-            // $sql = 'SELECT * FROM records where unionp="'. $place .'" order by id DESC';
             $sql= 'SELECT r.name as personName, u.name as unionName, w.name as wardName, age, gender, nid, mobile, ward, relief_type, fiscal_year FROM  unions u, records r, wards w WHERE r.unionp=u.id and r.ward=w.id and r.unionp="'. $place .'" order by r.id DESC';
+            if(isset($_GET['relief']) && !empty($_GET['relief'])) {
+              $sql= 'SELECT r.name as personName, u.name as unionName, w.name as wardName, age, gender, nid, mobile, ward, relief_type, fiscal_year FROM  unions u, records r, wards w WHERE r.unionp=u.id and r.ward=w.id and r.unionp="'. $place .'" and r.relief_type="'. $_GET['relief'] .'" order by r.id DESC';
+            }
+            if(isset($_GET['gender'])) {
+              $sql= 'SELECT r.name as personName, u.name as unionName, w.name as wardName, age, gender, nid, mobile, ward, relief_type, fiscal_year FROM  unions u, records r, wards w WHERE r.unionp=u.id and r.ward=w.id and r.unionp="'. $place .'" and r.gender="'. $_GET['gender'] .'" order by r.id DESC';
+            }
+
             // var_dump($sql); exit();
             $q = $pdo->query($sql);
             $q1 = $pdo->query($sql);
@@ -49,7 +55,7 @@
                 }
                 // vfprintf(handle, format, args)ar_dump($row); exit();
               ?>
-              ইউনিয়নের ত্রাণ গ্রহীতা: <?php $rows = $q->rowCount(); echo $rows; $i=1; ?> জন
+              ইউনিয়নের <?= isset($_GET['relief']) ? get_relief_name($_GET['relief']) : 'ত্রাণ'?> গ্রহীতা: <?php $rows = $q->rowCount(); echo $rows; $i=1; ?> জন
             </h4>
           </div>
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -57,15 +63,15 @@
               <div class="col-sm-6 form-inline">
                 <div class="form-group">
                     <label class="control-label" for="sel1">ত্রাণের ধরণ:</label>&nbsp;
-                    <select class="form-control" id="sel1">
-                      <option value="">-- ত্রাণের ধরণ --</option>
+                    <select class="form-control" id="sel_relief" onchange="location = this.value;">
+                      <option value="?union=<?=$place?>">-- ত্রাণের ধরণ --</option>
                       <?php
                         $rel = "SELECT id, name FROM relief_types ORDER BY id ASC";
                         $res = $pdo->query($rel);
                         $res->setFetchMode(PDO::FETCH_ASSOC);
                         while($r = $res->fetch() ) {
-                          //echo "<option>".$r['name']."</option>";
-                          echo '<option><a href="showData.php?union='.$r['id'].'">'.$r['name'].'</a></option>';
+                          $selected = isset($_GET['relief']) && $_GET['relief'] == $r['id'] ? 'selected' : '';
+                          echo '<option value="?union='.$place.'&relief='.$r['id'].'"'.$selected.'>'.$r['name'].'</option>';
                         }
                       ?>
                     </select>
@@ -74,10 +80,10 @@
               <div class="col-sm-6 form-inline">
                 <div class="form-group">
                     <label class="control-label" for="sel1">ত্রাণগ্রহীতার ধরণ:</label>&nbsp;
-                    <select class="form-control" id="sel1">
-                      <option value="">-- ত্রাণগ্রহীতার ধরণ --</option>
-                      <option>পুরুষ</option>
-                      <option>মহিলা</option>
+                    <select class="form-control" id="sel_gender" onchange="location = this.value;">
+                      <option value="?union=<?=$place?>">-- ত্রাণগ্রহীতার ধরণ --</option>
+                      <option value="?union=<?=$place?>&gender=1" <?=isset($_GET['gender']) && $_GET['gender'] == 1 ? 'selected' : '' ?>>পুরুষ</option>
+                      <option value="?union=<?=$place?>&gender=0" <?=isset($_GET['gender']) && $_GET['gender'] == 0 ? 'selected' : '' ?>>মহিলা</option>
                     </select>
                 </div>
               </div>

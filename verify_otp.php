@@ -18,7 +18,8 @@
 				$row = $result->fetch(PDO::FETCH_ASSOC);
 
 				if($result->rowCount() > 0) {
-                    if($otp === $row["otp"]) {
+					// echo $otp.'<br>'.$row['otp'];
+                    if($otp === $row['otp']) {
                         $status = 1;
                         $otp = null;
                         $result = $pdo->prepare("UPDATE users SET status=?, otp=? WHERE id=?");;
@@ -27,7 +28,8 @@
                         $result->bindParam(3, $_SESSION['user_id'], PDO::PARAM_INT);
                         if($result->execute()) {
                             $_SESSION["user_login"] = $_SESSION["user_id"];
-                            $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(24));
+							$_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(24));
+							$_SESSION["role"] = 0; // user role initially.
                             $loginMsg = "ওটিপি ভেরিফেকেশন সফল হয়েছে!";
                             header("refresh:2; index.php");
                         }

@@ -36,19 +36,19 @@
 								header("refresh:2; index.php");
 							}
 							else {
-								$otp = mt_rand(10000,99999);
-								$result = $pdo->prepare("UPDATE users SET otp=? WHERE id=?");
-								$result->bindParam(1, $otp, PDO::PARAM_INT);
-								$result->bindParam(2, $row['id'], PDO::PARAM_INT);
-								if($result->execute()) {
+								// $otp = mt_rand(10000,99999);
+								// $result = $pdo->prepare("UPDATE users SET otp=? WHERE id=?");
+								// $result->bindParam(1, $otp, PDO::PARAM_INT);
+								// $result->bindParam(2, $row['id'], PDO::PARAM_INT);
+								// if($result->execute()) {
 									$_SESSION["user_id"] = $row["id"];
 									$_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(24));
 									$errorMsg[]="আপনার একাউন্ট একটিভেট করা হয় নি! অনুগ্রহ করে আপনার ইমেইলে প্রেরিত ওটিপি প্রদান করুন।";
 									header("refresh:2; verify_otp.php");
-								}
-								else {
-									$errorMsg[]="ওটিপি প্রেরণ সম্ভব হচ্ছে না! উপজেলা সহকারী প্রোগ্রামারের সাথে যোগাযোগ করুন।";
-								}
+								// }
+								// else {
+									// $errorMsg[]="ওটিপি প্রেরণ সম্ভব হচ্ছে না! উপজেলা সহকারী প্রোগ্রামারের সাথে যোগাযোগ করুন।";
+								// }
 							}
 						}
 						else {
