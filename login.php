@@ -33,6 +33,7 @@
 								$_SESSION["role"] = $row["role"];
 								$_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(24));
 								$loginMsg = "লগইন সফল হয়েছে!";
+								ob_start();
 								header("refresh:2; index.php");
 							}
 							else {
@@ -44,6 +45,7 @@
 									$_SESSION["user_id"] = $row["id"];
 									$_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(24));
 									$errorMsg[]="আপনার একাউন্ট একটিভেট করা হয় নি! অনুগ্রহ করে আপনার ইমেইলে প্রেরিত ওটিপি প্রদান করুন।";
+									ob_start();
 									header("refresh:2; verify_otp.php");
 								// }
 								// else {

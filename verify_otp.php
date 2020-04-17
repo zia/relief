@@ -1,7 +1,9 @@
 <?php
     require_once './_common_files/header.php';
-    if(!isset($_SESSION["user_id"]))
+    if(!isset($_SESSION["user_id"])) {
+        ob_start();
         header("location: ./login.php");
+    }
 
 	if(isset($_REQUEST['btn_verify']) && $_SERVER["REQUEST_METHOD"] == "POST") {
 		$otp = clean_input($_REQUEST["txt_otp"]);
@@ -31,6 +33,7 @@
 							$_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(24));
 							$_SESSION["role"] = 0; // user role initially.
                             $loginMsg = "ওটিপি ভেরিফেকেশন সফল হয়েছে!";
+                            ob_start();
                             header("refresh:2; index.php");
                         }
                     }

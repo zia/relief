@@ -43,6 +43,7 @@
 
 					if ($stmt->execute()) {
 						$regMsg="আবেদন গৃহীত হয়েছে! উপজেলা প্রশাসন হতে অতিসত্বর আপনার সাথে যোগাযোগ করা হবে। ধন্যবাদ!";
+						ob_start();
 					 	header("refresh:2; login.php");
 					}
 					else {

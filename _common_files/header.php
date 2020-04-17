@@ -1,7 +1,9 @@
 <?php
     session_start();
-	if(isset($_SESSION["user_login"]))
+	if(isset($_SESSION["user_login"])) {
+		ob_start();
 		header("location: ../index.php");
+	}
 
 	$uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 	$segment = str_replace(".php", "", $uriSegments[2]);

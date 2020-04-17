@@ -2,6 +2,7 @@
   require_once 'config.php';
   include('header.php');
 	if(!isset($_SESSION["user_login"])) {
+    ob_start();
 		header("location: login.php");
   }
   if(!isset($_SESSION['token'])){
