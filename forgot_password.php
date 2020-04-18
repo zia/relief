@@ -22,8 +22,8 @@
 						$result->bindParam(2, $_SESSION['user_id'], PDO::PARAM_INT);
 						if ($result->execute()) {
 							$loginMsg = "নতুন পাসওয়ার্ড দিন!";
-							ob_start();
-							header("refresh:2; reset_password.php");
+							// ob_start();
+							header("Refresh:2; reset_password.php");
 						}
 						else {
 							$errorMsg[]="ওটিপি সংরক্ষণ সম্ভব হচ্ছে না! অনুগ্রহ করে আবার চেষ্টা করুন।";

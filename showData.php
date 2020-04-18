@@ -1,5 +1,6 @@
 <?php
   require_once('config.php');
+  include('header.php');
   function get_relief_name($relief_id) {
     global $pdo;
     $result = $pdo->prepare("SELECT name FROM relief_types WHERE id = ?");
@@ -10,7 +11,6 @@
   function get_gender($gender) {
     return $gender == 1 ? 'পুরুষ' : 'মহিলা';
   }
-  include('header.php');
 ?>
 
 <section class="inputform" style="margin-bottom: 25px;">

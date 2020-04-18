@@ -34,8 +34,8 @@
 					$result->bindParam(3, $_SESSION['user_id'], PDO::PARAM_INT);
 					if($result->execute()) {
                         $registerMsg="পাসওয়ার্ড রিসেট সফল হয়েছে, অনুগ্রহ করে লগইন করুন।";
-                        ob_start();
-                        header("refresh:2; login.php");
+                        // ob_start();
+                        header("Refresh:2; login.php");
 					}
 				}
 			}

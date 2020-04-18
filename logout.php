@@ -1,6 +1,6 @@
 <?php
 session_start();
 session_destroy();
-ob_start();
-header("location:login.php");
+// ob_start();
+header("Location:login.php");
 ?>

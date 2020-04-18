@@ -33,8 +33,8 @@
 								$_SESSION["role"] = $row["role"];
 								$_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(24));
 								$loginMsg = "লগইন সফল হয়েছে!";
-								ob_start();
-								header("refresh:2; index.php");
+								// ob_start();
+								header("Refresh:2; index.php");
 							}
 							else {
 								// $otp = mt_rand(10000,99999);
@@ -45,8 +45,8 @@
 									$_SESSION["user_id"] = $row["id"];
 									$_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(24));
 									$errorMsg[]="আপনার একাউন্ট একটিভেট করা হয় নি! অনুগ্রহ করে আপনার ইমেইলে প্রেরিত ওটিপি প্রদান করুন।";
-									ob_start();
-									header("refresh:2; verify_otp.php");
+									// ob_start();
+									header("Refresh:2; verify_otp.php");
 								// }
 								// else {
 									// $errorMsg[]="ওটিপি প্রেরণ সম্ভব হচ্ছে না! উপজেলা সহকারী প্রোগ্রামারের সাথে যোগাযোগ করুন।";

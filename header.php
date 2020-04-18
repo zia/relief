@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -53,7 +54,6 @@
       </div>
     </nav>
     <?php
-      session_start();
       // Only super user
       if($_SESSION["role"] == 1) {
     ?>

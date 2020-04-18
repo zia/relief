@@ -100,8 +100,8 @@
 					$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					if ($stmt->execute()) {
 						$regMsg="রেজিস্ট্রেশন সফল হয়েছে! উপজেলা প্রশাসন হতে অতিসত্বর আপনার সাথে যোগাযোগ করা হবে। ধন্যবাদ!";
-						ob_start();
-					 	header("refresh:2; login.php");
+						// ob_start();
+					 	header("Refresh:2; login.php");
 					}
 					else {
 						$errorMsg[]="স্বেচ্ছাসেবক নিবন্ধন সফল হয়নি। অনুগ্রহ করে আবার চেষ্টা করুন।";

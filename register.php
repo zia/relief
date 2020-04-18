@@ -62,8 +62,8 @@
 						)
 					) {
 						$registerMsg="রেজিস্ট্রেশন সফল হয়েছে! অনুগ্রহ করে লগইন করুন।";
-						ob_start();
-						header("refresh:2; login.php");
+						// ob_start();
+						header("Refresh:2; login.php");
 					}
 				}
 				else {

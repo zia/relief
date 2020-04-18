@@ -1,13 +1,13 @@
 <?php
   require_once 'config.php';
-  include('header.php');
 	if(!isset($_SESSION["user_login"])) {
-    ob_start();
-		header("location: login.php");
+    // ob_start();
+		header("Location: login.php");
   }
   if(!isset($_SESSION['token'])){
     throw new Exception('No token found!');
   }
+  include('header.php');
 ?>
 
 <div class="s130">
