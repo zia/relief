@@ -2,27 +2,27 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/rdsptkco/public_html/dashmina/
-    - /bin/cp -r * $DEPLOYPATH
-    # - /bin/cp -R _common_files $DEPLOYPATH
-    # - /bin/cp -R bootstrap $DEPLOYPATH
-    # - /bin/cp -R css $DEPLOYPATH
-    # - /bin/cp -R images $DEPLOYPATH
-    # - /bin/cp -R js $DEPLOYPATH
-    # - /bin/cp autodropdown.php $DEPLOYPATH
-    # - /bin/cp emg_relief.php $DEPLOYPATH
-    # - /bin/cp footer.php $DEPLOYPATH
-    # - /bin/cp forgot_password.php $DEPLOYPATH
-    # - /bin/cp header.php $DEPLOYPATH
-    # - /bin/cp helpline.php $DEPLOYPATH
-    # - /bin/cp index.php $DEPLOYPATH
-    # - /bin/cp license.md $DEPLOYPATH
-    # - /bin/cp login.php $DEPLOYPATH
-    # - /bin/cp logout.php $DEPLOYPATH
-    # - /bin/cp process.php $DEPLOYPATH
-    # - /bin/cp register.php $DEPLOYPATH
-    # - /bin/cp repDetails.php $DEPLOYPATH
-    # - /bin/cp reset_password.php $DEPLOYPATH
-    # - /bin/cp serviceadd.php $DEPLOYPATH
-    # - /bin/cp showData.php $DEPLOYPATH
-    # - /bin/cp verify_otp.php $DEPLOYPATH
-    # - /bin/cp volunteer.php $DEPLOYPATH
+    # - /bin/cp -r * $DEPLOYPATH
+    - /bin/cp -R js $DEPLOYPATH
+    - /bin/cp -R css $DEPLOYPATH
+    - /bin/cp -R images $DEPLOYPATH
+    - /bin/cp login.php $DEPLOYPATH
+    - /bin/cp index.php $DEPLOYPATH
+    - /bin/cp license.md $DEPLOYPATH
+    - /bin/cp logout.php $DEPLOYPATH
+    - /bin/cp footer.php $DEPLOYPATH
+    - /bin/cp header.php $DEPLOYPATH
+    - /bin/cp process.php $DEPLOYPATH
+    - /bin/cp showData.php $DEPLOYPATH
+    - /bin/cp helpline.php $DEPLOYPATH
+    - /bin/cp register.php $DEPLOYPATH
+    - /bin/cp -R bootstrap $DEPLOYPATH
+    - /bin/cp volunteer.php $DEPLOYPATH
+    - /bin/cp repDetails.php $DEPLOYPATH
+    - /bin/cp emg_relief.php $DEPLOYPATH
+    - /bin/cp serviceadd.php $DEPLOYPATH
+    - /bin/cp verify_otp.php $DEPLOYPATH
+    - /bin/cp -R _common_files $DEPLOYPATH
+    - /bin/cp autodropdown.php $DEPLOYPATH
+    - /bin/cp reset_password.php $DEPLOYPATH
+    - /bin/cp forgot_password.php $DEPLOYPATH
